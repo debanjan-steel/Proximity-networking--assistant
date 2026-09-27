@@ -70,44 +70,8 @@ def evaluate_tier(is_alumni, role):
         return "Tier 3"
     return "Tier 2"
 
-def craft_human_icebreaker(target_name, role, company, is_alumni, objective, asset):
-    first_name = (target_name or "there").strip().split()[0]
-    is_alumni_bool = is_alumni in [True, "TRUE", "true", "True", 1, "1"]
-    obj_lower = (objective or "Employment").lower()
-    asset_title = asset["title"]
-    
-    if is_alumni_bool:
-        if "optimization" in asset_title.lower():
-            draft = f"Hi {first_name}, wonderful to connect with a fellow CMI alumnus! Following our math training at CMI, I've focused on linear programming and optimization modeling. I would be deeply grateful for 2 minutes of your thoughts on quantitative modeling in industry. Thanks so much!"
-        elif "predictive" in asset_title.lower():
-            draft = f"Hi {first_name}, wonderful to connect with a fellow CMI alumnus! As a CMI Data Science student exploring predictive maintenance and sensor modeling, I'd be so grateful for 2 minutes of your advice on industrial ML pipelines. Thank you so much for your time!"
-        elif "interactive" in asset_title.lower():
-            draft = f"Hi {first_name}, great to connect with a fellow CMI graduate! Really inspired by your data science journey at {company or 'industry'}. As I build interactive data apps in Streamlit, I'd be so grateful for 2 minutes of your advice on production analytics. Thanks so much!"
-        else:
-            draft = f"Hi {first_name}, wonderful to connect with a fellow CMI alumnus! Really inspired by your work at {company or 'industry'}. As I wrap up my coursework at CMI, I'd be truly grateful for 2 minutes of your perspective on industry data science. Thanks so much!"
-    else:
-        if "optimization" in asset_title.lower():
-            if "employ" in obj_lower:
-                draft = f"Hi {first_name}, {company or 'your team'}'s logistics and routing network scale is truly remarkable! Coming from CMI Data Science with coursework in linear and integer programming, I'd be immensely grateful for 2 minutes of your perspective on dispatch algorithms. Thank you so much for your time!"
-            else:
-                draft = f"Hi {first_name}, really admire {company or 'your team'}'s operations research work! Drawing on my CMI Data Science background in optimization modeling, I'd love to swap notes on dynamic routing heuristics if you're open to connecting. Truly appreciate your time!"
-        elif "predictive" in asset_title.lower():
-            if "employ" in obj_lower:
-                draft = f"Hi {first_name}, really admire your sensor telemetry work at {company or 'your team'}! As a CMI Data Science student exploring CNN-Transformer models for remaining useful life prediction, I'd be so grateful for 2 minutes of your insights on sensor noise. Thanks so much for your time!"
-            else:
-                draft = f"Hi {first_name}, {company or 'your team'}'s industrial machinery engineering is impressive! As a CMI Data Science student researching CNN-Transformers for equipment degradation telemetry, I'd love to swap notes on telemetry architectures if you're open to connecting. Really appreciate your time!"
-        elif "interactive" in asset_title.lower():
-            if "employ" in obj_lower:
-                draft = f"Hi {first_name}, really admire {company or 'your team'}'s data platform infrastructure! As a CMI Data Science student prototyping interactive ML applications in Streamlit, I would be deeply grateful for 2 minutes of your perspective on bridging models to production. Thank you for your time!"
-            else:
-                draft = f"Hi {first_name}, love what {company or 'your team'} is building! As a CMI Data Science student deploying interactive data apps via Streamlit, I'd love to swap notes on reactive component architecture and dashboard UX if you're open to connecting. Really appreciate your time!"
-        else:
-            draft = f"Hi {first_name}, really admire your data science leadership at {company or 'your team'}! Coming from CMI with a rigorous foundation in mathematical modeling and ML, I'd be so grateful for 2 minutes of your perspective on production data systems. Thank you so much for your time!"
+from bulk_humanizer import generate_human_icebreaker as craft_human_icebreaker
 
-    words = draft.split()
-    if len(words) > 55:
-        draft = " ".join(words[:48]) + "... Thank you so much for your time!"
-    return draft
 
 def read_pending_rows(web_app_url):
     req = urllib.request.Request(
