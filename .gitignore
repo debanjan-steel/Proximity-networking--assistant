@@ -1,0 +1,17 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Logs
+*.log
+
+# Environment variables & secrets
+.env
+*.local
+
+# System files
+Thumbs.db
+ehthumbs.db
+[Dd]esktop.ini
+.DS_Store
